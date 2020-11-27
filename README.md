@@ -1,5 +1,11 @@
 # SPARK_ML
-Machine Learning avec Spark ML
+Machine Learning avec Spark ML.
+
+Spark est un framework bigdata, qui permet de faire de la programmation distribuee.
+
+Outil qui execute des programme au sein de plusieur machine (ne sera pas etudie).
+
+Focus sur le machine learning
 
 # Creation projet
 
@@ -66,7 +72,21 @@ Collect >> Pre-traitement (netoyage des datas) >> Modelisation (user a achete ou
 
 # DEMO
 
+## Configuration
 
+* Instancier Spark
+
+
+
+
+
+## Schgema dataset
+
+## Definir les feature (donnees)
+
+## Algorythgme
+
+## Validation (croissvalidation)
 
 
 
