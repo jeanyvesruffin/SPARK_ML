@@ -40,6 +40,37 @@ git push -u origin main
 
 Les 3 approches les plus courantes sont:
 
-1. Basees sur le contenu
-2. Collaboratives
-3. Hybrides
+1. Basees sur le contenu (historique user)
+2. Collaboratives (profil user similaire a un autre)
+3. Hybrides (ou les deux)
+
+But: Calculer la **probabilite d'achat a un bouquet**, a l'aide des algorithmes de machine learning en utilisant un dataset base sur la consommation TV/Web et sur des donnees de connaissance client (genre, age , localite ...)
+
+### Collecte et preparation de donnees
+
+* Identifier les clients ayant achete un bouquet particulier
+* Collecter leur consommation TV
+* Enrichir le dataset avec d'autres donnees
+
+### Modele user
+
+* Creer le modele en se basant sur la consommation TV des autres foyers, suivant leur similarite/ rapprochement possible
+
+### Recommandation
+
+Calculer la probabilite d'achat d'un bouquet particulier
+
+## Processus de machine learning
+
+Collect >> Pre-traitement (netoyage des datas) >> Modelisation (user a achete ou non) >> Evaluation (eval du modele a l'aide des metrics) >> Deploiement
+
+# DEMO
+
+
+
+
+
+
+
+
+
