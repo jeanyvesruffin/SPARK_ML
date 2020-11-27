@@ -80,24 +80,43 @@ Collect >> Pre-traitement (netoyage des datas) >> Modelisation (user a achete ou
 SparkSession sparkSession = SparkSession.builder().master("local").getOrCreate();
 ```
 
+## Schema dataset
+
 * Instancier StructField[]
 
 ```java
-// Corresponds aux nombres de variables dans le fichiers CSV
-public static final int nbresFeatures = 1500;
+// Corresponds aux nombres de colonne dans le fichiers CSV
+public static final int nbresFeatures = 15;
 	
 SparkSession sparkSession = SparkSession.builder().masterStructField[] structField = new StructField[nbresFeatures];
 ```
 
-* Definition des colonnes du dataset
+* Definition des structType
+
+```java
+StructType structType = new StructType(structField);
+```
+
+## Definition du target (target = probabilite recherche) et du chargement des datas par SPARK
+
+```java
+public static final String columnLabel = "label";
+// 1er colonne qui est la cible
+structFieldColonne[0] = new StructField(columnLabel, DataTypes.DoubleType, false, Metadata.empty());
+// pour les autres colonnes on fait une boucle
+for (int i = 0; i < nbresFeatures; i++) {
+	String columnName = "feature" + i;
+	structFieldColonne[i] = new StructField(columnName, DataTypes.DoubleType, false, Metadata.empty());
+
+	}
+```
+
+Puis chargement du fichier dataset par SPARK
 
 
 
-## Schgema dataset
 
-## Definir les feature (donnees)
-
-## Algorythgme
+## Algorythme
 
 ## Validation (croissvalidation)
 
