@@ -32,7 +32,7 @@ git remote add origin https://github.com/jeanyvesruffin/SPRING_BATCH_V2.git
 git push -u origin main
 ```
 
-# Context: Coder un système de recommandation de bouquet TV avec Spark ML
+# Context: Coder un systï¿½me de recommandation de bouquet TV avec Spark ML
 
 ## Systeme de recommandation
 
@@ -76,7 +76,20 @@ Collect >> Pre-traitement (netoyage des datas) >> Modelisation (user a achete ou
 
 * Instancier Spark
 
+```java
+SparkSession sparkSession = SparkSession.builder().master("local").getOrCreate();
+```
 
+* Instancier StructField[]
+
+```java
+// Corresponds aux nombres de variables dans le fichiers CSV
+public static final int nbresFeatures = 1500;
+	
+SparkSession sparkSession = SparkSession.builder().masterStructField[] structField = new StructField[nbresFeatures];
+```
+
+* Definition des colonnes du dataset
 
 
 
