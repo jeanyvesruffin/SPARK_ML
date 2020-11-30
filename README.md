@@ -11,6 +11,25 @@ Focus sur le machine learning
 
 * Creation d'un projet Maven
 
+Dependances utilisées:
+
+```xml
+<dependencies>
+	<dependency>
+		<groupId>org.apache.spark</groupId>
+		<artifactId>spark-sql_2.12</artifactId>
+		<version>3.0.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.spark</groupId>
+		<artifactId>spark-mllib_2.12</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	</dependency>
+</dependencies>
+```
+
+
 * Ajout d'un fichier Readme et gitignore
 
 * Initialisation depot git
@@ -113,14 +132,67 @@ for (int i = 0; i < nbresFeatures; i++) {
 
 Puis chargement du fichier dataset par SPARK
 
+```java
+// destination csv File
+URI rootFolder = MainSparkML.class.getResource("/").toURI();
+String inputDataSetPath = ((URI) rootFolder).resolve("csvFile.csv").getPath();
+Dataset<Row> dataSet = sparkSession.read().format("csv").option("delimiter"," ").schema(structType).load(inputDataSetPath);
+	
+```
+
+## Utilisation assembleur pour mettre toute les feature dans la meme colonne et les transformer.
 
 
+```java
+private static final String colFeatures="features";
+for (int i = 0; i < nbresFeatures; i++) {
+			String columnName = "feature" + i;
+			structFieldColonne[i] = new StructField(columnName, DataTypes.DoubleType, false, Metadata.empty());
+			featuresColList.add(columnName);
+}
 
-## Algorythme
+// Assembleur feature
+Dataset<Row> dataSet = sparkSession.read().format("csv").option("delimiter", " ").schema(structType)
+				.load(inputDataSetPath);
+		
+// Assembleur feature
+VectorAssembler vectorAssembler = new VectorAssembler().setInputCols(featuresColList.toArray(new String[0])).setOutputCol(colFeatures);
+vectorAssembler.transform(dataSet);
+```
 
-## Validation (croissvalidation)
+Transformation, 20% pour le tester (l'evaluer) et 80 % pour l'entrainer (creer le modele). et creation du jeu de test pour l'entrainement et le test.
 
+```java
+Dataset<Row>[] splitDataSet = dataSet.randomSplit(new double[] {0.8,0.2});
+Dataset<Row> trainingDataSet =splitDataSet[0];
+Dataset<Row> testDataSet = splitDataSet[1];
+```
 
+## Appliquer notre entrainement a notre dataSet.
+
+RandomForest est un arbre de decision qui permet de classifier en reduisant la variant des previsions et ameliore les performances.
+
+Utilisation du crossValidation permet au modele de fractionner les datas en sous ensembles en utilisant le jeu de test et d'entrainement.
+
+Instanciation de l'estimateur a travers un pipepline.
+
+```java
+// entrainement avec notre dataSet
+RandomForestClassifier classifier = new RandomForestClassifier().setLabelCol(columnLabel)
+		.setFeaturesCol(columnFeatures);
+Predictor predictor = classifier;
+Pipeline pipeline = new Pipeline().setStages(new PipelineStage[] { predictor });
+
+```
+
+Puis evaluation du modele en utilisant le metric "areaUnderROC", voir plus de detail !(https://spark.apache.org/docs/2.2.0/mllib-evaluation-metrics.html)[https://spark.apache.org/docs/2.2.0/mllib-evaluation-metrics.html]
+
+```java
+Evaluator evaluator = new BinaryClassificationEvaluator().setMetricName("areaUnderROC");
+
+```
+
+Parametre du RandomForestClassifier
 
 
 
